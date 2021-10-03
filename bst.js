@@ -1,68 +1,110 @@
-class Node {
-    constructor(value){
-        this.value = value
-        this.left = null
-        this.right = null
+class Node
+{
+  constructor(data)
+  {
+    this.data = data;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+class BinarySearchTree
+{
+  constructor()
+  {
+    this.root = null;
+  }
+  
+  insert(data)
+  {
+    let node = new Node(data);
+    if(this.root == null)
+    {
+      this.root = node;
+    }else
+    {
+      this.insertNode(this.root, node);
     }
   }
   
-  class BinarySeachTree {
-        constructor(){
-          this.root = null
-        }
-    
-        insert(value){
-            const node = this.root
-            if(node === null){
-                this.root = new Node(value);
-                return this.root;
-            } else {
-                const searchTree = function(node){
-                    if(value < node.value){
-                        if(node.left === null){
-                            node.left = new Node(value);
-                            return node.left;
-                        }else if(node.left !== null){
-                            return searchTree(node.left);
-                        }
-                    } else if(value > node.value){
-                        if(node.right === null){
-                            node.right = new Node(value);
-                            return node.right;
-                        }else if(node.right !== null){
-                            return searchTree(node.right);
-                        }
-                    } else {
-                        return null;
-                    }
-                };
-                return searchTree(node);
-            }
-        }
-         
-          
-
-      find(value){
-       let curr = this.root;
-        while(curr.value !== value){
-            if(value < curr.value){
-                 curr = curr.left;
-            } else {
-                curr = curr.right;
-            }
-            if(curr === null){
-                return null
-            }
-        }
-        return curr;
-        }
+  insertNode(root, newNode)
+  {
+    if(newNode.data < root.data)
+    {
+      if(root.left == null)
+      {
+        root.left = newNode;
+      }else
+      {
+        this.insertNode(root.left, newNode);
+      }
+    }else if(newNode.data > root.data)
+    {
+      if(root.right == null)
+      {
+        root.right = newNode;
+      }else
+      {
+        this.insertNode(root.right, newNode);
+      }
     }
-const Bst = new BinarySeachTree();
-Bst.insert(50);
-Bst.insert(8);
-Bst.insert(55);
-Bst.insert(36);
-Bst.insert(58)
+  }
+  
+  getRootNode()
+  {
+    return this.root; 
+  }
+  getMin(){
+    if(this.root === null){
+      throw "Empty tree";
+    }
+    let currNode = this.root;
+    while(currNode.left !== null){
+      currNode = currNode.left;
+    }
+    return currNode.data;
+  }
 
-console.log(Bst.find(55));
-console.log(Bst);
+  getMax(){
+    if(this.root === null){
+      throw "Empty tree";
+    }
+    let currNode = this.root;
+    while(currNode.right !== null){
+      currNode = currNode.right;
+
+    }
+    return currNode.data;
+  }
+  
+  //traversal
+  
+  preorder(root)
+  {
+    if(root != null)
+    {
+      console.log(root.data); 
+      this.preorder(root.left); 
+      this.preorder(root.right); 
+    }
+  }
+}
+
+
+var bst = new BinarySearchTree();
+
+bst.insert(10);
+bst.insert(15);
+bst.insert(5);
+bst.insert(50);
+bst.insert(3);
+bst.insert(7);
+bst.insert(12);
+
+var root = bst.getRootNode();
+
+console.log('getMin');
+console.log(bst.getMin());
+console.log('getMax');
+console.log(bst.getMax());
+
